@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>S. Rodrigo Mejías — Peluquería</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --negro: #0D0D0D;
+      --rojo: #C8102E;
+      --rojo-hover: #E01535;
+      --blanco: #FAFAFA;
+      --gris-oscuro: #1A1A1A;
+      --gris-medio: #2C2C2C;
+      --gris-texto: #888;
+      --gris-borde: #2E2E2E;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--negro);
+      color: var(--blanco);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--negro);
+      border-bottom: 1px solid var(--gris-borde);
+      padding: 28px 24px 0;
+      text-align: center;
+    }
+
+    .header-nombre {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(38px, 8vw, 72px);
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      color: var(--blanco);
+    }
+
+    .header-nombre span {
+      color: var(--rojo);
+      display: block;
+    }
+
+    /* línea roja que "corta" */
+    .corte {
+      height: 3px;
+      background: var(--rojo);
+      width: 60px;
+      margin: 16px auto 18px;
+    }
+
+    .header-sub {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gris-texto);
+      margin-bottom: 20px;
+    }
+
+    /* marcas */
+    .marcas {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding: 14px 0 18px;
+      border-top: 1px solid var(--gris-borde);
+      opacity: 0.55;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gris-texto);
+    }
+
+    /* ── SOCIAL ── */
+    .social-bar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px 24px;
+      background: var(--gris-oscuro);
+      border-bottom: 1px solid var(--gris-borde);
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    .social-btn:hover { opacity: 0.8; }
+
+    .btn-ig { background: #E1306C; color: #fff; }
+    .btn-wa { background: #25D366; color: #fff; }
+    .btn-maps { background: var(--gris-medio); color: var(--blanco); border: 1px solid var(--gris-borde); }
+
+    .social-btn svg { width: 15px; height: 15px; fill: currentColor; flex-shrink: 0; }
+
+    /* ── WIZARD ── */
+    .wizard {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* steps indicator */
+    .steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 32px;
+    }
+
+    .step-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--gris-medio);
+      border: 2px solid var(--gris-borde);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 600; color: var(--gris-texto);
+      transition: all .3s;
+    }
+    .step-dot.active { background: var(--rojo); border-color: var(--rojo); color: var(--blanco); }
+    .step-dot.done { background: var(--gris-medio); border-color: var(--rojo); color: var(--rojo); }
+
+    .step-line {
+      flex: 1; max-width: 48px;
+      height: 2px; background: var(--gris-borde);
+      transition: background .3s;
+    }
+    .step-line.done { background: var(--rojo); }
+
+    /* screens */
+    .screen { display: none; animation: fadeIn .3s ease; }
+    .screen.active { display: block; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    .screen-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+      color: var(--blanco);
+    }
+
+    .screen-sub {
+      font-size: 12px;
+      color: var(--gris-texto);
+      margin-bottom: 24px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── SERVICIOS ── */
+    .servicios-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .servicio-card {
+      background: var(--gris-oscuro);
+      border: 1px solid var(--gris-borde);
+      border-radius: 6px;
+      padding: 16px 14px;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      user-select: none;
+    }
+    .servicio-card:hover { border-color: var(--gris-texto); }
+    .servicio-card.selected { border-color: var(--rojo); background: rgba(200,16,46,0.08); }
+
+    .servicio-nombre {
+      font-weight: 500;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .servicio-duracion {
+      font-size: 11px;
+      color: var(--gris-texto);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── FECHA ── */
+    .calendar-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .cal-month {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 0.06em;
+    }
+
+    .cal-nav-btn {
+      background: var(--gris-medio);
+      border: 1px solid var(--gris-borde);
+      color: var(--blanco);
+      width: 32px; height: 32px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .cal-nav-btn:hover { background: var(--gris-borde); }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      text-align: center;
+    }
+
+    .cal-header-day {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--gris-texto);
+      padding: 4px 0;
+      text-transform: uppercase;
+    }
+
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all .15s;
+      background: transparent;
+      color: var(--blanco);
+    }
+    .cal-day:hover:not(.disabled):not(.empty) { border-color: var(--gris-texto); }
+    .cal-day.selected { background: var(--rojo); border-color: var(--rojo); font-weight: 600; }
+    .cal-day.today { border-color: var(--gris-texto); }
+    .cal-day.disabled { color: var(--gris-borde); cursor: default; }
+    .cal-day.empty { cursor: default; }
+
+    /* ── HORARIOS ── */
+    .horas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .hora-btn {
+      background: var(--gris-oscuro);
+      border: 1px solid var(--gris-borde);
+      border-radius: 5px;
+      color: var(--blanco);
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      padding: 10px 6px;
+      cursor: pointer;
+      transition: all .15s;
+      text-align: center;
+    }
+    .hora-btn:hover { border-color: var(--gris-texto); }
+    .hora-btn.selected { background: var(--rojo); border-color: var(--rojo); font-weight: 600; }
+    .hora-btn.ocupada { color: var(--gris-borde); cursor: default; text-decoration: line-through; }
+
+    /* ── FORMULARIO ── */
+    .form-group { margin-bottom: 16px; }
+
+    .form-label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gris-texto);
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: var(--gris-oscuro);
+      border: 1px solid var(--gris-borde);
+      border-radius: 5px;
+      color: var(--blanco);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-input:focus { border-color: var(--rojo); }
+    .form-input::placeholder { color: var(--gris-borde); }
+
+    /* resumen reserva */
+    .resumen-box {
+      background: var(--gris-oscuro);
+      border: 1px solid var(--gris-borde);
+      border-left: 3px solid var(--rojo);
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+
+    .resumen-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+    }
+    .resumen-row:not(:last-child) { border-bottom: 1px solid var(--gris-borde); }
+
+    .resumen-key { color: var(--gris-texto); }
+    .resumen-val { font-weight: 500; }
+
+    /* ── BOTONES ── */
+    .btn-primary {
+      width: 100%;
+      background: var(--rojo);
+      color: var(--blanco);
+      border: none;
+      border-radius: 5px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.1em;
+      padding: 14px;
+      cursor: pointer;
+      transition: background .2s;
+      margin-top: 8px;
+    }
+    .btn-primary:hover { background: var(--rojo-hover); }
+    .btn-primary:disabled { opacity: 0.4; cursor: default; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--gris-texto);
+      border: 1px solid var(--gris-borde);
+      border-radius: 5px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: border-color .2s;
+      margin-top: 12px;
+      width: 100%;
+    }
+    .btn-secondary:hover { border-color: var(--gris-texto); color: var(--blanco); }
+
+    /* ── CONFIRMACIÓN ── */
+    .confirm-icon {
+      width: 56px; height: 56px;
+      background: rgba(200,16,46,0.12);
+      border: 2px solid var(--rojo);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 24px;
+    }
+
+    .confirm-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 0.06em;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .confirm-sub {
+      text-align: center;
+      color: var(--gris-texto);
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    /* error */
+    .error-msg {
+      background: rgba(200,16,46,0.1);
+      border: 1px solid var(--rojo);
+      border-radius: 5px;
+      color: var(--rojo);
+      font-size: 12px;
+      padding: 10px 14px;
+      margin-top: 10px;
+      display: none;
+    }
+    .error-msg.visible { display: block; }
+
+    /* loading */
+    .loading-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(13,13,13,0.85);
+      z-index: 100;
+      align-items: center; justify-content: center;
+      flex-direction: column; gap: 16px;
+    }
+    .loading-overlay.active { display: flex; }
+
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid var(--gris-borde);
+      border-top-color: var(--rojo);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-txt {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gris-texto);
+    }
+
+    /* footer */
+    footer {
+      border-top: 1px solid var(--gris-borde);
+      padding: 20px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--gris-borde);
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 400px) {
+      .servicios-grid { grid-template-columns: 1fr; }
+      .horas-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-txt">Guardando reserva...</div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-nombre">
+    S. RODRIGO MEJÍAS<span>PELUQUERÍA</span>
+  </div>
+  <div class="corte"></div>
+  <div class="header-sub">Los Naranjos 940, Machalí · O'Higgins</div>
+  <div class="marcas">
+    <span>American Crew</span>
+    <span>Schwarzkopf</span>
+    <span>L'Oréal</span>
+    <span>Brasil Cacau</span>
+    <span>Olaplex</span>
+    <span>Kérastase</span>
+  </div>
+</header>
+
+<!-- SOCIAL -->
+<div class="social-bar">
+  <a class="social-btn btn-ig" href="https://www.instagram.com/peluqueriarodrigomejias" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    Instagram
+  </a>
+  <a class="social-btn btn-wa" href="https://wa.me/56965639976" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    WhatsApp
+  </a>
+  <a class="social-btn btn-maps" href="https://maps.google.com/?q=Los+Naranjos+940+Machalí" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+    Cómo llegar
+  </a>
+</div>
+
+<!-- WIZARD -->
+<div class="wizard">
+
+  <!-- STEPS INDICATOR -->
+  <div class="steps" id="stepsIndicator">
+    <div class="step-dot active" id="dot1">1</div>
+    <div class="step-line" id="line1"></div>
+    <div class="step-dot" id="dot2">2</div>
+    <div class="step-line" id="line2"></div>
+    <div class="step-dot" id="dot3">3</div>
+    <div class="step-line" id="line3"></div>
+    <div class="step-dot" id="dot4">4</div>
+  </div>
+
+  <!-- SCREEN 1: SERVICIO -->
+  <div class="screen active" id="screen1">
+    <div class="screen-title">¿Qué servicio necesitas?</div>
+    <div class="screen-sub">Selecciona una opción para continuar</div>
+    <div class="servicios-grid" id="serviciosGrid"></div>
+    <button class="btn-primary" id="btnS1" disabled onclick="goScreen(2)">Elegir fecha →</button>
+  </div>
+
+  <!-- SCREEN 2: FECHA -->
+  <div class="screen" id="screen2">
+    <div class="screen-title">¿Qué día te acomoda?</div>
+    <div class="screen-sub">Lunes a sábado disponible</div>
+
+    <div class="calendar-nav">
+      <button class="cal-nav-btn" id="btnPrevMes" onclick="cambiarMes(-1)">‹</button>
+      <div class="cal-month" id="calMesLabel"></div>
+      <button class="cal-nav-btn" onclick="cambiarMes(1)">›</button>
+    </div>
+
+    <div class="cal-grid">
+      <div class="cal-header-day">LU</div>
+      <div class="cal-header-day">MA</div>
+      <div class="cal-header-day">MI</div>
+      <div class="cal-header-day">JU</div>
+      <div class="cal-header-day">VI</div>
+      <div class="cal-header-day">SA</div>
+      <div class="cal-header-day">DO</div>
+    </div>
+
+    <div class="cal-grid" id="calGrid" style="margin-top:4px;"></div>
+
+    <button class="btn-primary" id="btnS2" disabled onclick="goScreen(3)">Ver horarios →</button>
+    <button class="btn-secondary" onclick="goScreen(1)">← Volver</button>
+  </div>
+
+  <!-- SCREEN 3: HORA -->
+  <div class="screen" id="screen3">
+    <div class="screen-title">¿A qué hora?</div>
+    <div class="screen-sub" id="labelFechaHoras"></div>
+    <div class="horas-grid" id="horasGrid"></div>
+    <button class="btn-primary" id="btnS3" disabled onclick="goScreen(4)" style="margin-top:16px;">Continuar →</button>
+    <button class="btn-secondary" onclick="goScreen(2)">← Volver</button>
+  </div>
+
+  <!-- SCREEN 4: DATOS -->
+  <div class="screen" id="screen4">
+    <div class="screen-title">Tus datos</div>
+    <div class="screen-sub">Así te confirma Rodrigo tu hora</div>
+
+    <div class="resumen-box" id="resumenBox"></div>
+
+    <div class="form-group">
+      <label class="form-label">Nombre completo</label>
+      <input class="form-input" type="text" id="inputNombre" placeholder="Tu nombre" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Teléfono (WhatsApp)</label>
+      <input class="form-input" type="tel" id="inputTel" placeholder="+56 9 XXXX XXXX" />
+    </div>
+
+    <div class="error-msg" id="errorMsg">Completa tu nombre y teléfono para continuar.</div>
+
+    <button class="btn-primary" onclick="confirmarReserva()">Confirmar reserva ✓</button>
+    <button class="btn-secondary" onclick="goScreen(3)">← Volver</button>
+  </div>
+
+  <!-- SCREEN 5: CONFIRMACIÓN -->
+  <div class="screen" id="screen5">
+    <div class="confirm-icon">✓</div>
+    <div class="confirm-title">¡Hora agendada!</div>
+    <div class="confirm-sub">Rodrigo te confirmará tu reserva por WhatsApp</div>
+
+    <div class="resumen-box" id="resumenConfirm"></div>
+
+    <a class="btn-primary" id="btnWaConfirm" href="#" target="_blank" style="display:block;text-align:center;text-decoration:none;padding:14px;">
+      Enviar confirmación por WhatsApp
+    </a>
+    <button class="btn-secondary" onclick="nuevaReserva()">Agendar otra hora</button>
+  </div>
+
+</div>
+
+<footer>
+  ● <span style="letter-spacing:.18em">ACCESO PRIVADO</span> — <a href="rodrigo-admin.html" style="color:var(--gris-borde);text-decoration:none;">panel</a>
+</footer>
+
+<script>
+  // ── CONFIG ──
+  const SUPABASE_URL = 'https://mdxgwjjxufkkgcjrkfeu.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1keGd3amp4dWZra2djanJrZmV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3MjQ3MTksImV4cCI6MjA5NDMwMDcxOX0.-Asw0hK89pMjk9-EYLw_iNJA8yNKXOumlvSG5kHr6pY';
+  const WA_NUMERO   = '56965639976';
+
+  const SERVICIOS = [
+    { nombre: 'Corte dama',        duracion: '1 hora' },
+    { nombre: 'Corte varón',       duracion: '1 hora' },
+    { nombre: 'Mechas',            duracion: '1 hora' },
+    { nombre: 'Visos',             duracion: '1 hora' },
+    { nombre: 'Babylight',         duracion: '1 hora' },
+    { nombre: 'Alisado capilar',   duracion: '1 hora' },
+    { nombre: 'Botox capilar',     duracion: '1 hora' },
+  ];
+
+  const HORAS = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
+
+  // ── ESTADO ──
+  let estado = {
+    servicio: null,
+    fecha: null,     // Date
+    fechaStr: null,  // YYYY-MM-DD
+    hora: null,
+    horasOcupadas: []
+  };
+
+  let calMes, calAnio;
+
+  // ── INIT ──
+  function init() {
+    const hoy = new Date();
+    calMes  = hoy.getMonth();
+    calAnio = hoy.getFullYear();
+    renderServicios();
+    renderCalendario();
+  }
+
+  // ── SERVICIOS ──
+  function renderServicios() {
+    const g = document.getElementById('serviciosGrid');
+    g.innerHTML = SERVICIOS.map((s, i) => `
+      <div class="servicio-card" onclick="selectServicio(${i})" id="sc${i}">
+        <div class="servicio-nombre">${s.nombre}</div>
+        <div class="servicio-duracion">${s.duracion}</div>
+      </div>
+    `).join('');
+  }
+
+  function selectServicio(i) {
+    document.querySelectorAll('.servicio-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('sc' + i).classList.add('selected');
+    estado.servicio = SERVICIOS[i].nombre;
+    document.getElementById('btnS1').disabled = false;
+  }
+
+  // ── CALENDARIO ──
+  function renderCalendario() {
+    const label = document.getElementById('calMesLabel');
+    const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    label.textContent = meses[calMes] + ' ' + calAnio;
+
+    const hoy = new Date(); hoy.setHours(0,0,0,0);
+    const primerDia = new Date(calAnio, calMes, 1);
+    const ultimoDia = new Date(calAnio, calMes + 1, 0);
+
+    // lunes = 0
+    let inicioOffset = (primerDia.getDay() + 6) % 7;
+
+    const g = document.getElementById('calGrid');
+    g.innerHTML = '';
+
+    for (let i = 0; i < inicioOffset; i++) {
+      const d = document.createElement('div');
+      d.className = 'cal-day empty';
+      g.appendChild(d);
+    }
+
+    for (let dia = 1; dia <= ultimoDia.getDate(); dia++) {
+      const fecha = new Date(calAnio, calMes, dia);
+      const dow = fecha.getDay(); // 0=dom
+      const esDomingo = dow === 0;
+      const esPasado  = fecha < hoy;
+      const esHoy     = fecha.getTime() === hoy.getTime();
+
+      const d = document.createElement('div');
+      d.textContent = dia;
+      d.className = 'cal-day';
+
+      if (esDomingo || esPasado) {
+        d.classList.add('disabled');
+      } else {
+        if (esHoy) d.classList.add('today');
+        const fStr = `${calAnio}-${String(calMes+1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
+        if (estado.fechaStr === fStr) d.classList.add('selected');
+        d.onclick = () => selectFecha(fecha, fStr, d);
+      }
+
+      g.appendChild(d);
+    }
+
+    // botón prev: deshabilitar si es mes actual
+    const hoyM = new Date();
+    document.getElementById('btnPrevMes').disabled =
+      calAnio === hoyM.getFullYear() && calMes === hoyM.getMonth();
+  }
+
+  function cambiarMes(delta) {
+    calMes += delta;
+    if (calMes > 11) { calMes = 0; calAnio++; }
+    if (calMes < 0)  { calMes = 11; calAnio--; }
+    renderCalendario();
+  }
+
+  function selectFecha(fecha, fStr, el) {
+    document.querySelectorAll('.cal-day.selected').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    estado.fecha    = fecha;
+    estado.fechaStr = fStr;
+    document.getElementById('btnS2').disabled = false;
+  }
+
+  // ── HORAS ──
+  async function cargarHoras() {
+    const label = document.getElementById('labelFechaHoras');
+    const dias  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+    const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const f = estado.fecha;
+    label.textContent = `${dias[f.getDay()]} ${f.getDate()} de ${meses[f.getMonth()]}`;
+
+    // cargar horas ocupadas de Supabase
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/rp_reservas?fecha=eq.${estado.fechaStr}&estado=neq.cancelada&select=hora`,
+        { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
+      );
+      const data = await res.json();
+      estado.horasOcupadas = data.map(r => r.hora.substring(0,5));
+    } catch(e) {
+      estado.horasOcupadas = [];
+    }
+
+    renderHoras();
+  }
+
+  function renderHoras() {
+    const g = document.getElementById('horasGrid');
+    g.innerHTML = HORAS.map(h => {
+      const ocupada = estado.horasOcupadas.includes(h);
+      return `<button class="hora-btn ${ocupada ? 'ocupada' : ''}"
+        onclick="${ocupada ? '' : `selectHora('${h}', this)`}"
+        ${ocupada ? 'disabled' : ''}>${h}</button>`;
+    }).join('');
+
+    // restaurar selección si ya había una
+    if (estado.hora && !estado.horasOcupadas.includes(estado.hora)) {
+      document.getElementById('btnS3').disabled = false;
+    }
+  }
+
+  function selectHora(h, el) {
+    document.querySelectorAll('.hora-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    estado.hora = h;
+    document.getElementById('btnS3').disabled = false;
+  }
+
+  // ── RESUMEN ──
+  function renderResumen(containerId) {
+    const dias  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+    const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const f = estado.fecha;
+
+    document.getElementById(containerId).innerHTML = `
+      <div class="resumen-row"><span class="resumen-key">Servicio</span><span class="resumen-val">${estado.servicio}</span></div>
+      <div class="resumen-row"><span class="resumen-key">Fecha</span><span class="resumen-val">${dias[f.getDay()]} ${f.getDate()} de ${meses[f.getMonth()]}</span></div>
+      <div class="resumen-row"><span class="resumen-key">Hora</span><span class="resumen-val">${estado.hora} hrs</span></div>
+    `;
+  }
+
+  // ── CONFIRMAR ──
+  async function confirmarReserva() {
+    const nombre = document.getElementById('inputNombre').value.trim();
+    const tel    = document.getElementById('inputTel').value.trim();
+    const err    = document.getElementById('errorMsg');
+
+    if (!nombre || !tel) { err.classList.add('visible'); return; }
+    err.classList.remove('visible');
+
+    document.getElementById('loadingOverlay').classList.add('active');
+
+    try {
+      const body = {
+        servicio:   estado.servicio,
+        fecha:      estado.fechaStr,
+        hora:       estado.hora + ':00',
+        nombre_cliente: nombre,
+        telefono_cliente: tel,
+        estado:     'pendiente'
+      };
+
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/rp_reservas`, {
+        method: 'POST',
+        headers: {
+          'apikey':       SUPABASE_KEY,
+          'Authorization':'Bearer ' + SUPABASE_KEY,
+          'Content-Type': 'application/json',
+          'Prefer':       'return=representation'
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (!res.ok) throw new Error('Error al guardar');
+
+      // armar WhatsApp
+      const dias  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+      const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+      const f = estado.fecha;
+      const fechaLeg = `${dias[f.getDay()]} ${f.getDate()} de ${meses[f.getMonth()]}`;
+
+      const msg = encodeURIComponent(
+        `Hola Rodrigo! 👋\nAcabo de agendar una hora:\n\n📋 *Servicio:* ${estado.servicio}\n📅 *Fecha:* ${fechaLeg}\n🕐 *Hora:* ${estado.hora} hrs\n👤 *Nombre:* ${nombre}\n📱 *Teléfono:* ${tel}\n\n¡Quedo atento/a a la confirmación!`
+      );
+
+      document.getElementById('btnWaConfirm').href = `https://wa.me/${WA_NUMERO}?text=${msg}`;
+
+      renderResumen('resumenConfirm');
+      document.getElementById('resumenConfirm').innerHTML +=
+        `<div class="resumen-row"><span class="resumen-key">Nombre</span><span class="resumen-val">${nombre}</span></div>
+         <div class="resumen-row"><span class="resumen-key">Teléfono</span><span class="resumen-val">${tel}</span></div>`;
+
+      goScreen(5);
+
+    } catch(e) {
+      document.getElementById('errorMsg').textContent = 'Error al guardar. Intenta de nuevo.';
+      document.getElementById('errorMsg').classList.add('visible');
+    } finally {
+      document.getElementById('loadingOverlay').classList.remove('active');
+    }
+  }
+
+  // ── NAVEGACIÓN ──
+  function goScreen(n) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen' + n).classList.add('active');
+    updateSteps(n);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (n === 3) cargarHoras();
+    if (n === 4) renderResumen('resumenBox');
+  }
+
+  function updateSteps(n) {
+    const total = 4;
+    for (let i = 1; i <= total; i++) {
+      const dot  = document.getElementById('dot' + i);
+      const line = document.getElementById('line' + i);
+      if (i < n) {
+        dot.classList.remove('active'); dot.classList.add('done');
+        dot.innerHTML = '✓';
+      } else if (i === n) {
+        dot.classList.add('active'); dot.classList.remove('done');
+        dot.innerHTML = i;
+      } else {
+        dot.classList.remove('active','done');
+        dot.innerHTML = i;
+      }
+      if (line) line.classList.toggle('done', i < n);
+    }
+    // ocultar steps en pantalla 5
+    document.getElementById('stepsIndicator').style.display = n === 5 ? 'none' : 'flex';
+  }
+
+  function nuevaReserva() {
+    estado = { servicio: null, fecha: null, fechaStr: null, hora: null, horasOcupadas: [] };
+    document.getElementById('inputNombre').value = '';
+    document.getElementById('inputTel').value    = '';
+    document.getElementById('btnS1').disabled    = true;
+    document.getElementById('btnS2').disabled    = true;
+    document.getElementById('btnS3').disabled    = true;
+    renderServicios();
+    const hoy = new Date();
+    calMes = hoy.getMonth(); calAnio = hoy.getFullYear();
+    renderCalendario();
+    goScreen(1);
+  }
+
+  init();
+</script>
+</body>
+</html>
